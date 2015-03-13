@@ -8,6 +8,8 @@ TTTabBar allows you to create a Tab Bar with:
 - Differents sizes for every single tab
 - Set each element of the tab as tab or button
 - Update the tabBar size, color, elments at any time
+- Load a tab programatically
+- Load a view that is not in the tabs
 
 Configurations:
 - Tab Background
@@ -84,3 +86,14 @@ override func ttTabBar(tabBar: TTTabBar, tabDidAppear tabBarItem: TTTabBarItem)
 override func ttTabBar(tabBar: TTTabBar, buttonHasBeenClicked tabBarItem: TTTabBarItem)
 ```
 
+Load a tab programatically
+
+```
+//tabBarItem == nil. all the tabs will be deselected and the actual view will be deleted
+func loadViewControllerFrom(tabBarItem: TTTabBarItem?)
+```
+
+Load a view that is not on the Tab Bar Items
+ ```
+ func loadViewController(vc: UIViewController)
+ ```
