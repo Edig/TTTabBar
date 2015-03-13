@@ -12,6 +12,7 @@ class TTTabBar: UIViewController {
     
     private var detailView: UIView! //View that will show controllers
     private var activeTabBar: TTTabBarItem? //Active showing view Controller
+    private var activeView: UIView? //Active showing view Controller
     private var tabBarView: UIView! //View of tabBar
     private var contentTabBarView : UIView! //Content, where background is render
     
@@ -174,6 +175,10 @@ class TTTabBar: UIViewController {
             ttTabBar(self, tabDidDisappear: tabBar)
         }
         
+        if let view = activeView {
+            view.removeFromSuperview()
+        }
+        
         if let item = tabBarItem {
             //Change image to the new tabBarItem to selected
             if let image = item.selectedImage {
@@ -213,9 +218,14 @@ class TTTabBar: UIViewController {
             ttTabBar(self, tabDidDisappear: tabBar)
         }
         
+        if let view = activeView {
+            view.removeFromSuperview()
+        }
+        
         //add VC to detailView
         //set active bar
         activeTabBar = nil
+        activeView = vc.view
         
         vc.view.frame = self.detailView.bounds
         detailView.addSubview(vc.view)
