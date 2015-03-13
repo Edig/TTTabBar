@@ -27,9 +27,9 @@ How it works:
 1. Subclass a UIViewController with TTTabBar, it can be in storyboard (TTTabBar is a subclass of UIViewController)
 
 2. Create the Tab Bar Items, with TTTabBarItem
-- You can init this with a viewController or with images
-- I recommend that if the item of the tab is a tab initialize with a ViewController, if the element is a button initialize with a image
-- Then you need to set the image and selected image
+ You can init this with a viewController or with images
+ I recommend that if the item of the tab is a tab initialize with a ViewController, if the element is a button initialize with a image
+ Then you need to set the image and selected image
 
 ```
 //Tab. VC -> UIViewController or subclass
