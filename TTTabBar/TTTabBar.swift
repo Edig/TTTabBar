@@ -9,7 +9,7 @@
 import UIKit
 
 class TTTabBar: UIViewController {
-
+    
     private var detailView: UIView! //View that will show controllers
     private var activeTabBar: TTTabBarItem? //Active showing view Controller
     private var tabBarView: UIView! //View of tabBar
@@ -74,7 +74,7 @@ class TTTabBar: UIViewController {
         self.renderButtons()
     }
     
-    func updateBackgroundColor (color: UIColor) {
+    private func updateBackgroundColor (color: UIColor) {
         contentTabBarView.backgroundColor = color
     }
     
@@ -92,7 +92,7 @@ class TTTabBar: UIViewController {
         }
     }
     
-    func renderButtons() {
+    private func renderButtons() {
         
         //Get all TabBarItems and divide the width between
         let widthPerButton = (self.view.frame.width - spaceBetweenTabs*CGFloat(tabBarItems.count))/CGFloat(tabBarItems.count)
@@ -107,7 +107,7 @@ class TTTabBar: UIViewController {
             
             if defaultTabBarItem == tabBarItem {
                 //Load the default VC
-                self.loadViewController(tabBarItem)
+                self.loadViewControllerFrom(tabBarItem)
             }
             
             //Call action on touchUpInside
@@ -142,19 +142,21 @@ class TTTabBar: UIViewController {
     
     func tabBarItemClicked(sender: AnyObject) {
         if let tabBar = sender as? TTTabBarItem {
-            self.loadViewController(tabBar)
+            self.loadViewControllerFrom(tabBar)
         }
     }
     
-    func loadViewController(tabBarItem: TTTabBarItem) {
-        if !self.ttTabBar(self, shouldChangeTab: tabBarItem) {
-            return
-        }
-        
-        //if users click on the same tab that is active, return
-        if let tabBar = activeTabBar {
-            if tabBarItem == activeTabBar {
+    func loadViewControllerFrom(tabBarItem: TTTabBarItem?) {
+        if let item = tabBarItem {
+            if !self.ttTabBar(self, shouldChangeTab: item) {
                 return
+            }
+            
+            //if users click on the same tab that is active, return
+            if let tabBar = activeTabBar {
+                if item == activeTabBar {
+                    return
+                }
             }
         }
         
@@ -172,25 +174,53 @@ class TTTabBar: UIViewController {
             ttTabBar(self, tabDidDisappear: tabBar)
         }
         
-        //Change image to the new tabBarItem to selected
-        if let image = tabBarItem.selectedImage {
-            tabBarItem.setImage(image, forState: UIControlState.Normal)
+        if let item = tabBarItem {
+            //Change image to the new tabBarItem to selected
+            if let image = item.selectedImage {
+                item.setImage(image, forState: UIControlState.Normal)
+            }
+            
+            
+            //add VC to detailView
+            if let vc = item.viewController {
+                ttTabBar(self, tabWillAppear: item)
+                //set active bar
+                activeTabBar = item
+                
+                vc.view.frame = self.detailView.bounds
+                detailView.addSubview(vc.view)
+                self.addChildViewController(vc)
+                vc.didMoveToParentViewController(self)
+                
+                ttTabBar(self, tabDidAppear: item)
+            }
         }
-        
+    }
+    
+    //IF you need to load an external view controller, that is not on the tab menu
+    func loadViewController(vc: UIViewController) {
+        //Change image to the old tabBarItem to no selected
+        if let tabBar = activeTabBar {
+            ttTabBar(self, tabWillDisappear: tabBar)
+            if let image = tabBar.image {
+                tabBar.setImage(image, forState: UIControlState.Normal)
+            }
+            
+            //Remove actual View
+            if let vc = tabBar.viewController {
+                vc.view.removeFromSuperview()
+            }
+            ttTabBar(self, tabDidDisappear: tabBar)
+        }
         
         //add VC to detailView
-        if let vc = tabBarItem.viewController {
-            ttTabBar(self, tabWillAppear: tabBarItem)
-            //set active bar
-            activeTabBar = tabBarItem
-            
-            vc.view.frame = self.detailView.bounds
-            detailView.addSubview(vc.view)
-            self.addChildViewController(vc)
-            vc.didMoveToParentViewController(self)
-            
-            ttTabBar(self, tabDidAppear: tabBarItem)
-        }
+        //set active bar
+        activeTabBar = nil
+        
+        vc.view.frame = self.detailView.bounds
+        detailView.addSubview(vc.view)
+        self.addChildViewController(vc)
+        vc.didMoveToParentViewController(self)
     }
     
     //MARK: overridable Func
