@@ -11,15 +11,17 @@ import UIKit
 class TTTabBar: UIViewController {
     
     private var detailView: UIView! //View that will show controllers
-    private var activeTabBar: TTTabBarItem? //Active showing view Controller
+    var activeTabBar: TTTabBarItem? //Active showing view Controller
     private var activeView: UIView? //Active showing view Controller
     private var tabBarView: UIView! //View of tabBar
     private var contentTabBarView : UIView! //Content, where background is render
     
+    private var tabBarHidden = false
+    
     //TabBar Items, which include VC
     var tabBarItems: [TTTabBarItem] = []
     
-    private let defaultTabBarHeight: CGFloat = 40
+    private let defaultTabBarHeight: CGFloat = 44
     private var initialTabBarHeight: CGFloat = 0
     
     //TabBar Custom
@@ -31,7 +33,7 @@ class TTTabBar: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //Defaults
         tabBarHeight = defaultTabBarHeight
         initialTabBarHeight = tabBarHeight
@@ -232,6 +234,45 @@ class TTTabBar: UIViewController {
         self.addChildViewController(vc)
         vc.didMoveToParentViewController(self)
     }
+    
+    // MARK: - Get Functions
+    func getActualController() -> UIViewController? {
+        if let activeTab = activeTabBar {
+            return activeTab.viewController
+        }
+        return nil
+    }
+    
+    //MARK: hide/show tabBar
+    func hideTabBar(animated: Bool) {
+        if !tabBarHidden  {
+            UIView.animateWithDuration(0.5) {
+                self.tabBarView.frame.origin.y += self.tabBarView.frame.width
+                self.detailView.frame.size.height = self.view.frame.height
+            }
+            tabBarHidden = true
+        }
+    }
+    
+    func showTabBar(animated: Bool) {
+        if tabBarHidden  {
+            UIView.animateWithDuration(0.5) {
+                self.tabBarView.frame.origin.y -= self.tabBarView.frame.width
+                self.detailView.frame.size.height -= self.contentTabBarView.frame.height
+            }
+            
+            tabBarHidden = false
+        }
+        
+    }
+    
+    // MARK: - Active TabBar
+    func isTabSelected(tab: TTTabBarItem) {
+        if activeTabBar == tab {
+            
+        }
+    }
+    
     
     //MARK: overridable Func
     internal func ttTabBar(tabBar: TTTabBar, shouldChangeTab tabBarItem: TTTabBarItem) -> Bool {
