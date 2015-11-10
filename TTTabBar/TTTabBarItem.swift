@@ -28,22 +28,22 @@ class TTTabBarItem: UIButton {
         super.drawRect(rect)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
     }
     
     //Init with default size
     init(image: UIImage?, selected: UIImage?) {
-        super.init(frame: CGRectMake(0, 0, 0, 40))
+        super.init(frame: CGRectMake(0, 0, 0, 44))
         self.setImage(image, forState: UIControlState.Normal)
         self.image = image
         self.selectedImage = selected
     }
     
     init(viewController: UIViewController) {
-        super.init(frame: CGRectMake(0, 0, 0, 40))
+        super.init(frame: CGRectMake(0, 0, 0, 44))
         self.viewController = viewController
     }
     
-
+    
 }
