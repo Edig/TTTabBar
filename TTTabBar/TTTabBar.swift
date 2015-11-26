@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TTTabBar: UIViewController {
+public class TTTabBar: UIViewController {
     
     private var detailView: UIView! //View that will show controllers
     var activeTabBar: TTTabBarItem? //Active showing view Controller
@@ -31,7 +31,7 @@ class TTTabBar: UIViewController {
     var tabBackgroundColor = UIColor.whiteColor()
     
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         //Defaults
