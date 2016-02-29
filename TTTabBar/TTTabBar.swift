@@ -35,8 +35,12 @@ class TTTabBar: UIViewController {
         super.viewDidLoad()
         
         //Defaults
-        tabBarHeight = defaultTabBarHeight
+        if (tabBarHeight == 0) {
+            tabBarHeight = defaultTabBarHeight
+        }
+        
         initialTabBarHeight = tabBarHeight
+            
         
         //Create the detailView
         detailView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height-tabBarHeight))
