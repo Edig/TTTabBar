@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TTTabBarItem: UIButton {
+public class TTTabBarItem: UIButton {
     
     var offsetY: CGFloat = 0 //Offset from Top Y
     var offsetBottom: CGFloat = 0 //Offset from Bottom, like margin
@@ -23,12 +23,12 @@ class TTTabBarItem: UIButton {
     
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
+    public override func drawRect(rect: CGRect) {
         // Drawing code
         super.drawRect(rect)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
     }
     
