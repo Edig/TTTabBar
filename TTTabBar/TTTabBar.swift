@@ -11,7 +11,7 @@ import UIKit
 public class TTTabBar: UIViewController {
     
     private var detailView: UIView! //View that will show controllers
-    var activeTabBar: TTTabBarItem? //Active showing view Controller
+    public var activeTabBar: TTTabBarItem? //Active showing view Controller
     private var activeView: UIView? //Active showing view Controller
     private var tabBarView: UIView! //View of tabBar
     private var contentTabBarView : UIView! //Content, where background is render
@@ -19,16 +19,16 @@ public class TTTabBar: UIViewController {
     private var tabBarHidden = false
     
     //TabBar Items, which include VC
-    var tabBarItems: [TTTabBarItem] = []
+    public var tabBarItems: [TTTabBarItem] = []
     
     private let defaultTabBarHeight: CGFloat = 44
     private var initialTabBarHeight: CGFloat = 0
     
     //TabBar Custom
-    var tabBarHeight: CGFloat = 0 //Height of the TabBar, if a TTTabBarItem is bigger, will be over the tabBar
-    var defaultTabBarItem: TTTabBarItem!
-    var spaceBetweenTabs: CGFloat = 5
-    var tabBackgroundColor = UIColor.whiteColor()
+    public var tabBarHeight: CGFloat = 0 //Height of the TabBar, if a TTTabBarItem is bigger, will be over the tabBar
+    public var defaultTabBarItem: TTTabBarItem!
+    public var spaceBetweenTabs: CGFloat = 5
+    public var tabBackgroundColor = UIColor.whiteColor()
     
     
     override public func viewDidLoad() {
@@ -59,7 +59,7 @@ public class TTTabBar: UIViewController {
     }
     
     //Modify tabbar with custom options
-    func updateTabBarView() {
+    public func updateTabBarView() {
         
         //Update the detailView
         detailView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height-tabBarHeight)
@@ -85,7 +85,7 @@ public class TTTabBar: UIViewController {
         contentTabBarView.backgroundColor = color
     }
     
-    func updateTabBarHeight() {
+    public func updateTabBarHeight() {
         for tabBarItem in tabBarItems {
             
             //if one button is greather default. Set the tabBarView greather
@@ -147,13 +147,13 @@ public class TTTabBar: UIViewController {
         }
     }
     
-    func tabBarItemClicked(sender: AnyObject) {
+    public func tabBarItemClicked(sender: AnyObject) {
         if let tabBar = sender as? TTTabBarItem {
             self.loadViewControllerFrom(tabBar)
         }
     }
     
-    func loadViewControllerFrom(tabBarItem: TTTabBarItem?) {
+    public func loadViewControllerFrom(tabBarItem: TTTabBarItem?) {
         if let item = tabBarItem {
             if !self.ttTabBar(self, shouldChangeTab: item) {
                 return
@@ -209,7 +209,7 @@ public class TTTabBar: UIViewController {
     }
     
     //IF you need to load an external view controller, that is not on the tab menu
-    func loadViewController(vc: UIViewController) {
+    public func loadViewController(vc: UIViewController) {
         //Change image to the old tabBarItem to no selected
         if let tabBar = activeTabBar {
             ttTabBar(self, tabWillDisappear: tabBar)
@@ -240,7 +240,7 @@ public class TTTabBar: UIViewController {
     }
     
     // MARK: - Get Functions
-    func getActualController() -> UIViewController? {
+    public func getActualController() -> UIViewController? {
         if let activeTab = activeTabBar {
             return activeTab.viewController
         }
@@ -248,7 +248,7 @@ public class TTTabBar: UIViewController {
     }
     
     //MARK: hide/show tabBar
-    func hideTabBar(animated: Bool) {
+    public func hideTabBar(animated: Bool) {
         if !tabBarHidden  {
             UIView.animateWithDuration(0.5) {
                 self.tabBarView.frame.origin.y += self.tabBarView.frame.width
@@ -258,7 +258,7 @@ public class TTTabBar: UIViewController {
         }
     }
     
-    func showTabBar(animated: Bool) {
+    public func showTabBar(animated: Bool) {
         if tabBarHidden  {
             UIView.animateWithDuration(0.5) {
                 self.tabBarView.frame.origin.y -= self.tabBarView.frame.width
@@ -271,7 +271,7 @@ public class TTTabBar: UIViewController {
     }
     
     // MARK: - Active TabBar
-    func isTabSelected(tab: TTTabBarItem) {
+    public func isTabSelected(tab: TTTabBarItem) {
         if activeTabBar == tab {
             
         }
@@ -279,7 +279,7 @@ public class TTTabBar: UIViewController {
     
     
     //MARK: overridable Func
-    internal func ttTabBar(tabBar: TTTabBar, shouldChangeTab tabBarItem: TTTabBarItem) -> Bool {
+    public func ttTabBar(tabBar: TTTabBar, shouldChangeTab tabBarItem: TTTabBarItem) -> Bool {
         if tabBarItem.isButton {
             self.ttTabBar(tabBar, buttonHasBeenClicked: tabBarItem)
             return false
@@ -288,23 +288,23 @@ public class TTTabBar: UIViewController {
         return true
     }
     
-    internal func ttTabBar(tabBar: TTTabBar, tabWillDisappear tabBarItem: TTTabBarItem) {
+    public func ttTabBar(tabBar: TTTabBar, tabWillDisappear tabBarItem: TTTabBarItem) {
         
     }
     
-    internal func ttTabBar(tabBar: TTTabBar, tabDidDisappear tabBarItem: TTTabBarItem) {
+    public func ttTabBar(tabBar: TTTabBar, tabDidDisappear tabBarItem: TTTabBarItem) {
         
     }
     
-    internal func ttTabBar(tabBar: TTTabBar, tabWillAppear tabBarItem: TTTabBarItem) {
+    public func ttTabBar(tabBar: TTTabBar, tabWillAppear tabBarItem: TTTabBarItem) {
         
     }
     
-    internal func ttTabBar(tabBar: TTTabBar, tabDidAppear tabBarItem: TTTabBarItem) {
+    public func ttTabBar(tabBar: TTTabBar, tabDidAppear tabBarItem: TTTabBarItem) {
         
     }
     
-    internal func ttTabBar(tabBar: TTTabBar, buttonHasBeenClicked tabBarItem: TTTabBarItem) {
+    public func ttTabBar(tabBar: TTTabBar, buttonHasBeenClicked tabBarItem: TTTabBarItem) {
         
     }
 }
